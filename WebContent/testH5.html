@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <script src="js/jquery-1.11.2.min.js"></script>
+<title>Insert title here</title>
+
+</head>
+<body>
+<canvas id="c1" style="width:100%; height:100%">123</canvas>
+<script type="text/javascript">
+	var winWidth;
+	var winHeight;
+	// 下落对象
+	var downs = [];
+	//获取窗口宽度  
+	if (window.innerWidth)  
+	    winWidth = window.innerWidth;  
+	else if ((document.body) && (document.body.clientWidth))  
+	    winWidth = document.body.clientWidth;  
+	// 获取窗口高度  
+	if (window.innerHeight)  
+	    winHeight = window.innerHeight;  
+	else if ((document.body) && (document.body.clientHeight))  
+	    winHeight = document.body.clientHeight;  
+	         
+	// 通过深入Document内部对body进行检测，获取窗口大小  
+	if (document.documentElement && document.documentElement.clientHeight && document.documentElement.clientWidth)  
+	{  
+	    winHeight = document.documentElement.clientHeight;  
+	    winWidth = document.documentElement.clientWidth;  
+	}  
+	var canvas = document.getElementById("c1");
+	var context = canvas.getContext("2d");
+	canvas.width = winWidth;
+	canvas.height = winHeight;
+	context.fillStyle = "brown";
+	// 树干
+	var treeW = 20;
+	var treeH = 60;
+	context.fillStyle = "green";
+	var treeLeafW = 65;
+	var treeLeafH = 10;
+	
+	$("#c1").click(function(){
+		// 掉落
+		var showDown = true;
+		var xOff = Math.random()*120;
+		var downTime = 0;
+		downs.push({showDown:showDown, xOff:xOff, downTime:downTime});
+	});
+	// 刷新记时
+	var time = 0;
+	
+	// 刷新
+	var flash = function(){
+		context.clearRect ( 0 , 0 , winWidth , winHeight );
+		time++;
+		//树干
+		context.fillStyle = "brown";
+		context.fillRect(630, 400, treeW, treeH);
+		//树叶
+		context.beginPath();
+		if(time<10)
+		{
+			context.fillStyle = "green";
+			context.arc(640, 360, 70, 10, 0, true);
+		}
+		else
+		{
+			context.fillStyle = "red";
+			context.arc(640, 360, 70, 10, 0, true);
+			if(time>20)
+			{
+				time = 0;
+			}
+		}
+		context.fill();
+		context.closePath();
+		
+		//循环对象
+		for(var i = 0; i < downs.length; i++)
+		{
+			var oneDown = downs[i];
+			if(oneDown.showDown)
+			{
+				//console.log(oneDown.showDown);
+				
+				if(oneDown.showDown && oneDown.downTime<50)
+				{
+					context.fillStyle = "yellow";
+					context.beginPath();
+					context.arc(600 + oneDown.xOff, 362 + oneDown.downTime * 2, 10, 10, 0, true);
+					context.fill();
+					context.closePath();
+					oneDown.downTime++;
+				}
+				if(oneDown.downTime>=50)
+				{
+					oneDown.showDown = false;
+				}
+			}
+			else
+			{
+				
+			}
+		}
+		
+	};
+	// 刷新 30毫秒一次
+	setInterval(flash,30);
+</script>
+</body>
+</html>

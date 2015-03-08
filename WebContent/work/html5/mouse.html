@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<style>
+html,body{ margin:0; padding:0;}
+</style>
+</head>
+ 
+<body>
+<canvas id="cvs" width="300" height="300" style="border:1px solid #333;">你的浏览器不支持canvas，狗日的IE。</canvas>
+<div id="log"></div>
+<script>
+var cvs = document.getElementById("cvs");
+var ctx = cvs.getContext('2d');
+if(ctx){
+    var objs = [];
+    var CCircle = function(){
+        this.type = 'circle';
+        this.x = 0;
+        this.y = 0;
+        this.radius = 0;
+        this.isHover = false;
+        this.color = '#000';
+    };
+    var Draw = function(){
+        ctx.clearRect(0,0,cvs.width,cvs.height);
+        for(var i=0;i<objs.length;i++){
+            if(objs[i].type='circle'){
+                ctx.beginPath();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = objs[i].color;
+                ctx.arc(objs[i].x,objs[i].y,objs[i].radius,0,Math.PI*2,false);
+                ctx.stroke();
+                ctx.closePath();
+            }
+        }
+    }// end function
+     
+    for(var i=0;i<100;i++){
+        var c = new CCircle();
+        c.x = (Math.random()*300)|0;
+        c.y = (Math.random()*300)|0;
+        c.radius = 10;
+        c.hover = function(){
+            this.color = "#f00";
+            Draw();   
+        }
+        c.out = function(){
+            this.color = "#000";
+            Draw();   
+        }
+        objs.push(c);
+    }// end for
+    Draw();
+    cvs.onmousemove = function(e){
+        var hasHover = false;
+        for(var i=objs.length-1;i>-1;i--){
+            var c = objs[i];
+            if(((e.clientX-c.x)*(e.clientX-c.x)+(e.clientY-c.y)*(e.clientY-c.y)<=c.radius*c.radius) && (!hasHover)){
+                c.isHover = true;
+                hasHover = true;
+                c.hover && c.hover();
+            }else{
+                if(c.isHover){
+                    c.isHover = false;
+                    c.out && c.out();
+                }
+            }//end if
+        }// end for
+    }// end function
+}
+</script>
+</body>
+</html>

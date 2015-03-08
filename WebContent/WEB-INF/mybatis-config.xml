@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 
+	<typeHandlers>
+		<typeHandler javaType="boolean" jdbcType="CHAR"
+			handler="com.zkbc.core.framework.mybatis.BooleanTypeHandler" />
+	</typeHandlers>
+	 -->
+	 <!-- 
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="driver.encoding" value="UTF8" />
+				<property name="url" value="jdbc:mysql://localhost:3306/zkbc_p2p_fep?useUnicode=true" />
+				<property name="username" value="" />
+				<property name="password" value="" />
+				<property name="poolMaximumActiveConnections" value="300" />
+				<property name="poolMaximumIdleConnections" value="50" />
+				<property name="poolMaximumCheckoutTime" value="20000" />
+				<property name="poolTimeToWait" value="20000" />
+			</dataSource>
+		</environment>
+	</environments>
+	 -->
+	<mappers>
+		<package name="com.wyrz.sms.dao.map" />
+		<package name="com.zkbc.core.dao.map" />
+		<package name="net.zkbc.p2p.fep.mapper" />
+	</mappers>
+</configuration>

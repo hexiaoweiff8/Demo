@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="  
+    http://www.springframework.org/schema/beans   
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+    http://www.springframework.org/schema/context  
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd  
+    http://www.springframework.org/schema/mvc  
+    http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd 
+    http://www.springframework.org/schema/data/mongo  
+    http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd    
+    ">
+
+	<!-- 默认扫描的包路径 -->
+	<context:component-scan base-package="m.Controller">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.context.annotation.Configuration" />
+	</context:component-scan>
+
+	<!-- 添加注解驱动 -->
+	<mvc:annotation-driven />
+
+	<!-- 定义跳转的文件的前后缀 -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/" p:suffix=".jsp" />
+
+	<mongo:mongo id="mongo" host="127.0.0.1" port="27017" />
+	<!-- <bean id="userCredentials" class="org.springframework.data.authentication.UserCredentials">
+		<constructor-arg name="username" value="userName" />
+		<constructor-arg name="password" value="password" />
+	</bean> -->
+
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongo" ref="mongo" />
+		<constructor-arg name="databaseName" value="test" />
+		<!-- <constructor-arg ref="userCredentials" /> -->
+	</bean>
+	
+	
+	<!-- <bean id="mongo" class="org.springframework.data.mongodb.core.MongoFactoryBean"> 
+		<property name="host" value="localhost" /> </bean> -->
+	<!-- <bean id="dataSourceWrite" class="org.apache.commons.dbcp.BasicDataSource" 
+		p:url="${jdbc.write.url}" p:username="${jdbc.write.username}" p:password="${jdbc.write.password}" 
+		p:driverClassName="${jdbc.driverClassName}" p:initialSize="1" p:maxActive="30" 
+		p:maxIdle="5" p:minIdle="2" p:maxWait="1000" p:logAbandoned="true" p:removeAbandoned="true" 
+		p:removeAbandonedTimeout="60" p:validationQuery="select 1 from dual" p:testOnBorrow="true" 
+		p:testOnReturn="true" p:testWhileIdle="true" init-method="createDataSource" 
+		destroy-method="close"> </bean> <bean id="dataSourceRead" class="org.apache.commons.dbcp.BasicDataSource" 
+		p:url="${jdbc.read.url}" p:username="${jdbc.read.username}" p:password="${jdbc.read.password}" 
+		p:driverClassName="${jdbc.driverClassName}" p:initialSize="1" p:maxActive="30" 
+		p:maxIdle="5" p:minIdle="2" p:maxWait="1000" p:logAbandoned="true" p:removeAbandoned="true" 
+		p:removeAbandonedTimeout="60" p:validationQuery="select 1 from dual" p:testOnBorrow="true" 
+		p:testOnReturn="true" p:testWhileIdle="true" init-method="createDataSource" 
+		destroy-method="close"> </bean> 可写的SessionFactory sqlWriteSessionFactory 
+		<bean id="sqlWriteSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" 
+		scope="singleton"> <property name="dataSource" ref="dataSourceWrite" /> <property 
+		name="configLocation" value="classpath:mybatis-config.xml" /> </bean> 只读的SessionFactory 
+		sqlReadOnlySessionFactory <bean id="sqlReadOnlySessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" 
+		scope="singleton"> <property name="dataSource" ref="dataSourceRead" /> <property 
+		name="configLocation" value="classpath:mybatis-config.xml" /> </bean> -->
+</beans>
