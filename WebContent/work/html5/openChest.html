@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>开宝箱</title>
+<link rel="stylesheet" type="text/css" href="ztimages/css/common.css" />
+<script src="ztimages/js/jquery-1.10.2.js"></script>
+<script>
+var picAssets = {chest:"ztimages/imgs/chest.jpg",			//宝箱图片
+				 lucky:"ztimages/imgs/lucky.png",			//中奖
+				 unluck:"ztimages/imgs/unluck.png",			//未中奖
+				 gone:"ztimages/imgs/gone.png"				//结束了
+				};
+var picNameList = ['chest', 'lucky', 'unluck', 'gone']; //防止js的迭代器对非列表类型进行非顺序循环
+
+$(document).ready(function(){
+	var canvas=document.getElementById('chestCanvas'); //获得canvas
+	if(canvas.getContext("2d")){//支持h5
+		//------------------------初始化--------------------------------
+		var images = {};//图片列表
+		var context = canvas.getContext("2d");
+	
+		//占屏幕的中间位置2/5 宽度100%
+		var CANCS_WIDTH = 600;
+		var CANCS_HEIGHT = 300;
+		
+		var complete = {count:0};
+		var allImageCount = 3;
+		
+		//获取viewBlock大小
+		var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+		var h = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) * 3 / 10;
+		
+		//设置宽高
+		canvas.width = w;
+	    canvas.height = h;
+	    context.fillStyle = "rgba(107,188,51,1)"; 
+	    context.fillRect(0, 0, w, h);// 刷背景
+	    
+	 	//------------------------初始化--------------------------------
+		//------------------------通用方法定义---------------------------
+		
+		/**
+		 * 加载图片
+		 * @param url 图片url
+		 * @param x 图片起始X点
+		 * @param y 图片起始Y点
+		 * @param w 图片宽度
+		 * @param h 图片高度
+		 * @param callback 加载完毕后的回调, 会将image作为参数传入
+		 */
+		var loadImage = function(url, callback, complete){
+			var image = new Image();
+			image.src = url;
+			if(image.complete){
+				callback(url, image, complete);
+			}else{
+				image.onload = function(o){
+					console.log(o);
+					callback(url, image, complete);
+				};
+				image.onerror = function(){
+					alert("加载失败:" + url);
+				};
+			}
+		};
+		
+		/**
+		 * 加载图片回调
+		 * @param url 图片url
+		 * @param image 图片对象
+		 * @param completeCount 加载完毕count
+		 */
+		var callback = function(url, image, complete){
+			images[url] = image;
+			console.log(complete);
+			complete.count++;
+			if(complete.count == allImageCount){
+				//setInterval(function(){draw(context);}, 60);
+			}
+		};
+		
+		/**
+		 * 画面刷新
+		 */
+		var draw = function(context){
+			for(var i = 0; i < picNameList.length; i++){
+				var image = images;
+					context.drawImage(image, 0, 0);
+				console.log(context);
+				//context.fillStyle = "rgba(17,188,51,1)"; 
+				//context.fillRect(0,0,100,100);
+				//context.drawImage(image, 0, 0);
+			}
+			
+		};
+		
+		//------------------------通用方法定义---------------------------
+		//------------------------程序流程-------------------------------
+		
+		//------------------------加载中奖-------------------------------
+		loadImage(picAssets.lucky, callback, complete);
+		//------------------------加载中奖-------------------------------
+		
+		//------------------------加载未中奖-----------------------------
+		loadImage(picAssets.unluck, callback, complete);
+		//------------------------加载未中奖-----------------------------
+		
+		//------------------------加载宝箱-------------------------------
+		loadImage(picAssets.chest, callback, complete);
+		//------------------------加载宝箱-------------------------------
+		
+		//------------------------加载抽奖完毕---------------------------
+		loadImage(picAssets.gone, callback, complete);
+		//------------------------加载抽奖完毕---------------------------
+		
+		//------------------------开始动画-------------------------------
+		//draw(context);
+		//刷新画面 60毫秒一次
+		//动画流程: 显示3个箱子, 点击哪个打开哪个, 显示
+		//背景使用div背景, 弹出的确认框也是用div
+		//其他效果使用
+	}else{
+		alert();
+	}
+});
+</script>
+<style type="text/css">
+
+
+</style>
+</head>
+<body>
+<img border='0' src='ztimages/imgs/logo.jpg' width='100%' height='100%' class="backImg">
+<canvas id="chestCanvas" class="chestCanvas">抱歉，您的浏览器不支持HTML5-canvas，请使用支持HTML5的浏览器。</canvas>
+</body>
+</html>

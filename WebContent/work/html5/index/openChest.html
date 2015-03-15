@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>开宝箱</title>
+<link rel="stylesheet" type="text/css" href="../ztimages/css/common.css" />
+<script src="../ztimages/js/jquery-1.10.2.js"></script>
+<script>
+var picAssets = {chest:"ztimages/img/jiazaiT.png",	//宝箱图片
+				 lucky:"",							//中奖
+				 unluck:"",							//未中奖
+				 gone:""							//结束了
+				};
+
+$(document).ready(function(){
+	var canvas=document.getElementById('chestCanvas'); //获得canvas
+	if(canvas.getContext){//支持h5
+		var WIDTH = 0;
+		var HEIGHT = 0;
+		var RATE = 0;
+		var CANCS_WIDTH = 640;
+		var CANCS_HEIGHT = 1008;
+		//获取viewBlock大小
+		var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+		var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+		
+		RATE = w / h;
+		//长的赋值给高，短的赋值给宽
+		if(w >= h){
+			WIDTH = h;
+			HEIGHT = w;
+		}else{
+			WIDTH = w;
+			HEIGHT = h;
+		}
+		
+		canvas.width = WIDTH;
+	    canvas.height = HEIGHT;
+	    
+		//通用方法定义
+		//加载图片
+		var loadImage = function(url){
+			var image = new Image();
+			image.src = url;
+			if(image.complete){
+				ctx.drawImage(image);
+			}else{
+				image.onload = function(){
+					ctx.drawImage(image);
+				};
+				image.onerror = function(){
+					alert("加载失败");
+				};
+			}
+		};
+		//程序流程------------
+		//加载默认效果------
+		//加载中奖
+		//加载未中奖
+		//加载宝箱
+		//开始动画----------
+		
+		//动画流程: 显示3个箱子, 点击哪个打开哪个, 显示
+		//背景使用div背景, 弹出的确认框也是用div
+		//其他效果使用
+	}
+});
+</script>
+<style type="text/css">
+body {
+	margin: 0;
+	padding: 0;
+	min-height: 100%;
+	background-size:contain;
+	repeat-y:none;
+	background:url(../ztimages/imgs/logo.jpg);
+	background-repeat:no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+}
+
+</style>
+</head>
+<body>
+<img border='0' src='../ztimages/logo.jpg' width='100%' height='100%' style='position: absolute; z-index: -1;margin:0px;padding:0px'>
+<canvas id="chestCanvas">抱歉，您的浏览器不支持HTML5-canvas，请使用支持HTML5的浏览器。</canvas>
+</body>
+</html>
