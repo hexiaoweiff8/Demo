@@ -1,0 +1,44 @@
+ul, ul li {
+    list-style: none outside none;
+}
+.datatable-processing{line-height:0px;margin-top:0px;}
+.dataTable{margin-bottom:2px;}
+.pagination{margin:5px auto;}
+.pagenum {
+    float: right;
+    margin: 15px 0;
+    width: 100px;
+}
+#content{
+	padding-left:0;
+	width:84%;
+	float:left;
+}
+.left-bar{
+	width:16%;
+	float:left;
+	padding-left:10px;
+}
+.container{
+	width:100%;
+}
+.error{
+	color:red;
+}
+.div-img-342{
+	margin:10px 0;
+}
+.img-342-92{
+	width:342px;height:92px;
+}
+.div-img-show-s{
+	margin:10px;
+	display:inline;
+	float:left;
+}
+.img-show-s{
+	width:150px;height:90px;display:block;
+}
+.star-red{
+	color:red;padding-top:7px;
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <script src="JS/jquery-1.10.2.js"></script>
+<title>Insert title here</title>
+	<link href="JS/jquery.mobile-1.4.2/jquery.mobile-1.4.2.min.css" rel="stylesheet" type="text/css">
+	<script src="JS/jquery.mobile-1.4.2/jquery.mobile-1.4.2.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#enSure").click(function(){
+				//$.mobile.changePage("list6");
+				$("#bid1").hide();
+				$("#list6").show();
+				
+			});
+		});
+		
+	</script>
+</head>
+<body>
+<div data-role="page" data-title="投标" id="bid1" data-theme="v">
+    <div data-role="header" data-position="fixed">
+    	<a href="javascript:history.back();" data-ajax="false" data-icon="carat-l" class="ui-btn-left-v">&nbsp;</a>
+        <h1>投标</h1>
+    </div>
+    <div data-role="content" class="ui-content-v">
+        <ul data-role="listview" data-inset="true" class="ui-listview-tb">
+            <li class="ui-grid-a">
+                <div class="ui-block-a">可投金额</div>
+                <div class="ui-block-b"><span class="num"></span>元</div>
+            </li>
+            <li class="ui-grid-b">
+                <div class="ui-block-a ui-text-top">账户余额</div>
+                <div class="ui-block-b ui-text-top"><span class="orange-color"></span>元</div>
+                <div class="ui-block-c"><a id="toRecharge" href="javascript:void(0)" class="ui-btn ui-corner-all">充值</a></div>
+            </li>
+            <c:if test="${newFlag==0}">
+	            <li class="ui-grid-a">
+	                <div class="ui-block-a ui-text-top">投资金额</div>
+	                <div class="ui-block-b">
+	                    <input type="text" name="" id="" placeholder="投资金额必须是50的倍数" value=""/>
+	                </div>
+	            </li>
+            </c:if>
+            <c:if test="${newFlag==1}">
+            	<li>您共有<span class="orange-color">5</span>张体验券可用<span class="blue-color">【选择使用】</span></li>   <!-- 第二版使用 -->
+            </c:if>
+            <li class="ui-grid-a">
+                <div class="ui-block-a">预期收益</div>
+                <div class="ui-block-b"><span class="orange-color">0.00</span>元</div>
+            </li>
+         </ul>
+
+        <input type="button" id="enSure" value="确认投标">
+        <div class="ui-checkbox">
+        	<input name="checkbox-mini-1" id="checkbox-mini-1" data-mini="true" type="checkbox" data-role="none" checked>
+        	<label for="checkbox-mini-1" id="toAgreement" class="ui-btn-custom">我已阅读并同意&nbsp;<a href="#">${loanType==1?'借款协议':'债权转让协议'}</a></label>
+    	</div>
+    </div>
+    <div data-role="footer" data-position="fixed" class="ui-footer-v">
+        <p class="copyright">@财富500 caifu500.com 京ICP备 14026166号<br/>财富热线：4001-161-851</p>
+    </div>
+    <%@include file="/WEB-INF/include/nav.jsp"%>
+</div>
+
+<div data-role="page" data-title="优惠券" data-theme="v"  id="list6" >
+    <div data-role="header" data-position="fixed">
+        <a href="#nav-panel" data-icon="carat-l" class="ui-btn-left-v" data-iconpos="notext">个人中心</a>
+        <h1>优惠券</h1>
+    </div>
+    <div data-role="content" class="ui-content-v ui-content-coupon" >
+        <p class="coupon"><em></em><span class="tips">一次可选择多张使用</span><span class="choice">共选择<span class="num">0</span>元</span></p>
+    </div>
+    <div data-role="footer" data-position="fixed" class="ui-footer-custom">
+        <h4><a href="" class="ui-btn">即刻投标</a></h4>
+    </div>
+<!--page6 优惠券end-->
+    <%@include file="/WEB-INF/include/nav.jsp"%>
+</div>
+</body>
+</html>
