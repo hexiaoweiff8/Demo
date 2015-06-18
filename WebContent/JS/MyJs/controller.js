@@ -34,6 +34,9 @@ function emailRouteConfig($routeProvider) {
 	}).when('/bootstrap/', {
 		controller : 'bootstrapController',
 		templateUrl : "/Bootstrap/BootstrapIndex.jsp"
+	}).when('/three/', {
+		controller : 'threeController',
+		templateUrl : "/Exmple3D/ThreeDEMO.jsp"
 	}).otherwise({
 		redirectTo : "/"
 	});
@@ -180,5 +183,9 @@ function ngClassController($scope)
 
 function bootstrapController($scope)
 {
+	
+}
+
+function threeController($scope){
 	
 }
